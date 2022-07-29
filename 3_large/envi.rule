@@ -1,0 +1,18 @@
+####################################################
+# 1、定义编译器及环境公共参数，方便不同环境/平台移植
+####################################################
+
+CC = gcc
+AR = ar
+RM = rm
+CFLAGS  = 
+CFLAG_O = -c
+CFLAG_M = -E -MM
+ARFLAGS = rcs
+RMFLAGS = -fr
+MKDIR   = mkdir -p
+ECHO_OFF= @set -e
+ECHO_ON = 
+ifdef VPATH
+SRCS_INC := $(addprefix -I,$(strip $(VPATH)))
+endif
