@@ -6,7 +6,7 @@
 #include "md5.h"
 #include "main_2.c" ///
 
-int main (int argc, char *argv[])
+int main (void)
 {
 	printf("1. main() run!\n");
 	hello("hello world!");
@@ -15,3 +15,4 @@ int main (int argc, char *argv[])
 	md5();
 	return 0;
 }
+

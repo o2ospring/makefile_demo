@@ -5,14 +5,14 @@
 CC = gcc
 AR = ar
 RM = rm
-CFLAGS  = 
-CFLAG_O = -c
+CFLAG_L = 
+CFLAG_O = -c -W -Wall
 CFLAG_M = -E -MM
 ARFLAGS = rcs
 RMFLAGS = -fr
 MKDIR   = mkdir -p
-ECHO_OFF= @set -e
-ECHO_ON = 
+ECHO_SET= @set -e
+ECHO_END= 
 ifdef VPATH
 SRCS_INC := $(addprefix -I,$(strip $(VPATH)))
 endif

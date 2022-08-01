@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 
-extern uint8_t hello(uint8_t *p);
+extern uint8_t hello(char *p);
 
 #endif
+

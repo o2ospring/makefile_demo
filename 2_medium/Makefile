@@ -3,7 +3,7 @@
 ####################################################
 
 # 定义生成文件，包括其路径及文件名【只能是一个对象】
-EXE    = ./build/exec
+EXE    = ./build/app.exe
 
 # 定义中间文件夹，用于存放中间文件【只能是一个对象】
 OBJS_D = ./build/
@@ -22,20 +22,20 @@ LIBS   =
 
 # 添加源码文件及包含文件所在的路径【多个用空格分隔】
 VPATH  = ./app                                    \
-         ./usr                                    \
-         ./modules/md5                            \
+         ./usr/                                   \
+         ./modules/md5/                           \
          ./modules/crc
 
 # 定义编译器及其环境相关参数
 CC = gcc
 RM = rm
-CFLAGS  = 
-CFLAG_O = -c
+CFLAG_L = 
+CFLAG_O = -c -W -Wall
 CFLAG_M = -E -MM
 RMFLAGS = -fr
-MKDIR = mkdir -p
-ECHO_OFF= @set -e
-ECHO_ON = 
+MKDIR   = mkdir -p
+ECHO_SET= @set -e
+ECHO_END= 
 
 # 生成源文件包含路径选项参数
 ifdef VPATH
@@ -46,6 +46,10 @@ endif
 # 2、根据上面的相关配置，生成包括路径的相关文件对象
 ####################################################
 
+VPATH := $(addsuffix /,$(VPATH))
+VPATH := $(subst //,/,$(VPATH))
+SRCS_INC := $(addsuffix /,$(SRCS_INC))
+SRCS_INC := $(subst //,/,$(SRCS_INC))
 OBJS_D := $(addsuffix /,$(OBJS_D))
 OBJS_D := $(subst //,/,$(OBJS_D))
 DEPS_D := $(OBJS_D)
@@ -81,31 +85,31 @@ endif
 
 # 编译出最终执行文件
 $(EXE): $(OBJS) $(LIBS)
-	$(CC) $(CFLAGS) -o $@ $(filter %.o, $^) $(LIBS)
+	$(CC) $(CFLAG_L) -o $@ $(filter %.o, $^) $(LIBS)
 
 # 编译出中间目标文件
 $(OBJS_D)%.o: %.c
 	@echo "[2]making $@..."
-	@$(MKDIR) $(DIRS); \
-	$(CC) $(CFLAG_O) $< -o $@
+	@$(CC) $(CFLAG_O) $< -o $@
 
 # 生成代码依赖信息
 $(DEPS_D)%.d: %.c
 	@echo "[1]making $@..."
-	$(ECHO_OFF); \
-	$(MKDIR) $(DIRS); \
+	$(ECHO_SET); \
 	$(RM) $(RMFLAGS) $@.tmp; \
 	$(CC) $(CFLAG_M) $< > $@.tmp; \
 	sed 's,\(.*\)\.o[ :]*,$(dir $@)\1.o $@: ,g' < $@.tmp > $@; \
 	$(RM) $(RMFLAGS) $@.tmp; \
-	$(ECHO_ON)
+	$(ECHO_END)
 
 # 清除目标及执行文件
 clean:
+	$(MKDIR) $(DIRS)
 	$(RM) $(RMFLAGS) $(EXE) $(OBJX)
 
 # 查看变量对象相关值
 echo:
+	$(MKDIR) $(DIRS)
 	@echo "VPATH: $(VPATH)"      # VPATH 为[make]工具增加搜索目录
 	@echo "DIRS: $(DIRS)"        # DIRS 为编译过程需要创建的文件夹（如：build/）
 	@echo "SRCS: $(SRCS)"        # SRCS 为全部源码文件及其路径    （如：usr/hello.c）

@@ -3,7 +3,7 @@
 ####################################################
 
 # 定义生成文件，包括其路径及文件名【只能是一个对象】
-EXE    = $(ROOT)/build/objs/exec
+EXE    = $(ROOT)/build/objs/app.exe
 
 # 定义中间文件夹，用于存放中间文件【只能是一个对象】
 OBJS_D = $(ROOT)/build/objs
@@ -21,8 +21,8 @@ LIBS   = $(ROOT)/build/libs/crc.a
 
 # 添加源码文件及包含文件所在的路径【多个用空格分隔】
 VPATH  = $(ROOT)/app                             \
-         $(ROOT)/usr                             \
-         $(ROOT)/modules/md5                     \
+         $(ROOT)/usr/                            \
+         $(ROOT)/modules/md5/                    \
          $(ROOT)/modules/crc
 
 # 定义编译器及其环境相关参数
