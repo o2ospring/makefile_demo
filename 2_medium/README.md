@@ -20,7 +20,6 @@ make all      # 执行编译操作
 ```
 
 ***
-| 相关文件应用概要 |
+| 相关 Makefile 文件应用概要 |
 | :-------------- |
-| 1、[2_medium/Makefile](./Makefile) |
-| ● 统一设置编译文件、包含路径等。 |
+| 1、[2_medium/Makefile](./Makefile) <br>● 统一设置编译文件、包含路径等。 |

@@ -26,11 +26,8 @@ make all          # 执行编译操作
 ```
 
 ***
-| 相关文件应用概要 |
+| 相关 Makefile 文件应用概要 |
 | :-------------- |
-| 1、[3_large/Makefile](./Makefile) |
-| ● 设置子 Makefile 文件所在目录。 |
-| 2、[3_large/app/Makefile](./app/Makefile) |
-| ● 统一设置编译文件、包含路径等。 |
-| 3、[3_large/modules/crc/Makefile](./modules/crc/Makefile) |
-| ● 定制某模块的编译文件、编译参数等的一个示例。 |
+| 1、[3_large/Makefile](./Makefile) <br>● 设置子 Makefile 文件所在目录。 |
+| 2、[3_large/app/Makefile](./app/Makefile) <br>● 统一设置编译文件、包含路径等。 |
+| 3、[3_large/modules/crc/Makefile](./modules/crc/Makefile) <br>● 定制模块编译文件、编译参数等。 |

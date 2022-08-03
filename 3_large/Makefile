@@ -5,6 +5,7 @@ include $(ROOT)/envi.rule
 # 1、定义子 Makefile 文件所在路径。【多个用空格分隔】
 ####################################################
 
+# 注意: 唯一生成执行文件的子 Makefile 必须放到最后面
 MAKEFILE_D = $(ROOT)/modules/crc                   \
              $(ROOT)/app
 

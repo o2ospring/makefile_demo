@@ -54,13 +54,12 @@ OBJS_D := $(addsuffix /,$(OBJS_D))
 OBJS_D := $(subst //,/,$(OBJS_D))
 DEPS_D := $(OBJS_D)
 DIRS := $(sort $(OBJS_D) $(dir $(EXE)))
-SRCS := $(SRCS_F) $(wildcard $(SRCS_D))
-SRCS := $(filter %.c, $(SRCS))
+SRCS := $(filter %.c, $(SRCS_F) $(wildcard $(SRCS_D)))
 OBJS := $(SRCS:.c=.o)
 OBJS := $(addprefix $(OBJS_D),$(notdir $(OBJS)))
 DEPS := $(SRCS:.c=.d)
 DEPS := $(addprefix $(OBJS_D),$(notdir $(DEPS)))
-OBJX := $(OBJS) $(DEPS) $(addsuffix .tmp,$(OBJS))
+OBJX := $(sort $(OBJS) $(DEPS) $(addsuffix .tmp,$(DEPS)))
 LIBS := $(sort $(LIBS))
 
 ifdef VPATH
@@ -105,7 +104,7 @@ $(DEPS_D)%.d: %.c
 # 清除目标及执行文件
 clean:
 	$(MKDIR) $(DIRS)
-	$(RM) $(RMFLAGS) $(EXE) $(OBJX)
+	$(RM) $(RMFLAGS) $(OBJX) $(EXE)
 
 # 查看变量对象相关值
 echo:

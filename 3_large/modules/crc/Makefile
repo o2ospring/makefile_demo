@@ -22,7 +22,7 @@ VPATH  =
 
 # 定义编译器及其环境相关参数
 include $(ROOT)/envi.rule
-CFLAG_O += -O2
+CFLAG_O += -O1
 
 # 包含[Makefile]脚本公共代码
 include $(ROOT)/make.rule

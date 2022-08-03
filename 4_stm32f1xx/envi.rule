@@ -1,0 +1,22 @@
+####################################################
+# 1、定义编译器及环境公共参数，方便不同环境/平台移植
+####################################################
+
+SZ = arm-none-eabi-size
+CP = arm-none-eabi-objcopy
+AS = arm-none-eabi-gcc -x assembler-with-cpp
+CC = arm-none-eabi-gcc
+AR = arm-none-eabi-ar
+RM = rm
+CFLAG_L =    -mcpu=cortex-m3 -mthumb -specs=nano.specs -T$(LD_SCF) -Wl,-Map=$(TARGET).map,--cref -Wl,--gc-sections
+CFLAG_O = -c -mcpu=cortex-m3 -mthumb -fdata-sections -ffunction-sections $(addprefix -D,$(strip $(G_DEF)))
+CFLAG_M = -MMD -MP -MF"$(@:%.o=%.d)"
+ARFLAGS = rcs
+RMFLAGS = -fr
+MKDIR   = mkdir -p
+ECHO_SET= @set -e
+ECHO_END= 
+ifdef VPATH
+SRCS_INC := $(addprefix -I,$(strip $(VPATH)))
+endif
+
