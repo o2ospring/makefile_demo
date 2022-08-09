@@ -22,7 +22,7 @@ LIBS := $(sort $(LIBS))
 
 ifdef VPATH
 CFLAG_O += $(SRCS_INC)
-#CFLAG_M += $(SRCS_INC)
+CFLAG_M += $(SRCS_INC)
 endif
 
 ifdef DEBUG
@@ -70,21 +70,30 @@ endif
 # 编译出中间目标文件
 $(OBJS_D)%.o: %.c
 	@echo "[2]making $@..."
-	@$(CC) $(CFLAG_O) -Wa,-a,-ad,-alms=$(@:.o=.lst) $(CFLAG_M) $< -o $@
+	@$(CC) $(CFLAG_O) -Wa,-a,-ad,-alms=$(@:.o=.lst) $< -o $@
 
 $(OBJS_D)%.o: %.s
 	@echo "[2]making $@..."
-	@$(AS) $(CFLAG_O) $(CFLAG_M) $< -o $@
+	@$(AS) $(CFLAG_O) $< -o $@
 
-# 生成代码依赖信息 -----------由参数生成----------> $(CFLAG_M) --> -MMD -MP -MF"$(@:%.o=%.d)"
-#$(DEPS_D)%.d: %.c
-#	@echo "[1]making $@..."
-#	$(ECHO_SET); \
-#	$(RM) $(RMFLAGS) $@.tmp; \
-#	$(CC) $(CFLAG_M) $< > $@.tmp; \
-#	sed 's,\(.*\)\.o[ :]*,$(dir $@)\1.o $@: ,g' < $@.tmp > $@; \
-#	$(RM) $(RMFLAGS) $@.tmp; \
-#	$(ECHO_END)
+# 生成代码依赖信息
+$(DEPS_D)%.d: %.c
+	@echo "[1]making $@..."
+	$(ECHO_SET); \
+	$(RM) $(RMFLAGS) $@.tmp; \
+	$(CC) $(CFLAG_M) $< > $@.tmp; \
+	sed 's,\(.*\)\.o[ :]*,$(dir $@)\1.o $@: ,g' < $@.tmp > $@; \
+	$(RM) $(RMFLAGS) $@.tmp; \
+	$(ECHO_END)
+
+$(DEPS_D)%.d: %.s
+	@echo "[1]making $@..."
+	$(ECHO_SET); \
+	$(RM) $(RMFLAGS) $@.tmp; \
+	$(AS) $(CFLAG_M) $< > $@.tmp; \
+	sed 's,\(.*\)\.o[ :]*,$(dir $@)\1.o $@: ,g' < $@.tmp > $@; \
+	$(RM) $(RMFLAGS) $@.tmp; \
+	$(ECHO_END)
 
 # 清除目标及执行文件
 clean:

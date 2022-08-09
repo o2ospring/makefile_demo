@@ -1,4 +1,5 @@
 .PHONY: all clean echo
+export ROOT = $(realpath .)
 include $(ROOT)/envi.rule
 
 ####################################################
