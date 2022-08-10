@@ -22,7 +22,7 @@ LIBS := $(sort $(LIBS))
 
 ifdef VPATH
 CFLAG_O += $(SRCS_INC)
-CFLAG_M += $(SRCS_INC)
+#CFLAG_M += $(SRCS_INC)
 endif
 
 ifdef DEBUG
@@ -36,7 +36,7 @@ endif
 .PHONY: all clean echo
 
 ifdef TARGET
-all: $(TARGET).elf
+all: $(TARGET).elf $(TARGET).hex $(TARGET).bin
 endif
 
 ifdef LIB
@@ -53,47 +53,34 @@ endif
 # 编译出最终执行文件
 ifdef TARGET
 $(TARGET).elf: $(OBJS) $(LIBS)
-	$(CC) $(CFLAG_L) -o $@ $(filter %.o, $^) $(LIBS) -lc -lm -lnosys
-	@echo "[3]making $(TARGET).hex..."
-	@$(CP) $(TARGET).elf  $(TARGET).hex -O ihex
-	@echo "[3]making $(TARGET).bin..."
-	@$(CP) $(TARGET).elf  $(TARGET).bin -O binary -S
-	$(SZ) $@
+	@echo "[2]making $@..."
+	@$(CC) $(CFLAG_L) -o $@ $(filter %.o, $^) $(LIBS) -lc -lm -lnosys
+	@$(SZ) $@
+
+$(TARGET).hex: $(TARGET).elf
+	@echo "[3]making $@...."
+	@$(CP) $< $@ -O ihex
+
+$(TARGET).bin: $(TARGET).elf
+	@echo "[3]making $@..."
+	@$(CP) $< $@ -O binary -S
 endif
 
 # 打包生成静态库文件
 ifdef LIB
 $(LIB): $(OBJS)
-	$(AR) $(ARFLAGS) $@ $(filter %.o, $^)
+	@echo "[2]making $@..."
+	@$(AR) $(ARFLAGS) $@ $(filter %.o, $^)
 endif
 
 # 编译出中间目标文件
 $(OBJS_D)%.o: %.c
-	@echo "[2]making $@..."
-	@$(CC) $(CFLAG_O) -Wa,-a,-ad,-alms=$(@:.o=.lst) $< -o $@
+	@echo "[1]making $@..."
+	@$(CC) $(CFLAG_O) -Wa,-a,-ad,-alms=$(@:.o=.lst) $(CFLAG_M) $< -o $@
 
 $(OBJS_D)%.o: %.s
-	@echo "[2]making $@..."
-	@$(AS) $(CFLAG_O) $< -o $@
-
-# 生成代码依赖信息
-$(DEPS_D)%.d: %.c
 	@echo "[1]making $@..."
-	$(ECHO_SET); \
-	$(RM) $(RMFLAGS) $@.tmp; \
-	$(CC) $(CFLAG_M) $< > $@.tmp; \
-	sed 's,\(.*\)\.o[ :]*,$(dir $@)\1.o $@: ,g' < $@.tmp > $@; \
-	$(RM) $(RMFLAGS) $@.tmp; \
-	$(ECHO_END)
-
-$(DEPS_D)%.d: %.s
-	@echo "[1]making $@..."
-	$(ECHO_SET); \
-	$(RM) $(RMFLAGS) $@.tmp; \
-	$(AS) $(CFLAG_M) $< > $@.tmp; \
-	sed 's,\(.*\)\.o[ :]*,$(dir $@)\1.o $@: ,g' < $@.tmp > $@; \
-	$(RM) $(RMFLAGS) $@.tmp; \
-	$(ECHO_END)
+	@$(AS) $(CFLAG_O) $(CFLAG_M) $< -o $@
 
 # 清除目标及执行文件
 clean:

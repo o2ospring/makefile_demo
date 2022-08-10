@@ -6,13 +6,13 @@ CC = gcc
 AR = ar
 RM = rm
 CFLAG_L = 
-CFLAG_O = -c -W -Wall
-CFLAG_M = -E -MM
+CFLAG_O = -c
+CFLAG_M = -MMD -MP -MF"$(@:%.o=%.d)"
 ARFLAGS = rcs
 RMFLAGS = -fr
 MKDIR   = mkdir -p
-ECHO_SET= @set -e
-ECHO_END= 
+#ECHO_SET = @set -e
+#ECHO_END = 
 ifdef VPATH
 SRCS_INC := $(addprefix -I,$(strip $(VPATH)))
 endif

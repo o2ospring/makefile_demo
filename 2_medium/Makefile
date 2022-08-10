@@ -2,8 +2,8 @@
 # 1、配置编译相关参数、编译文件(夹)、目标及中间文件
 ####################################################
 
-# 定义生成文件，包括其路径及文件名【只能是一个对象】
-EXE    = ./build/app.exe
+# 定义生成目标，包括其路径及文件名【只能是一个对象】
+TARGET = ./build/app.exe
 
 # 定义中间文件夹，用于存放中间文件【只能是一个对象】
 OBJS_D = ./build/
@@ -14,8 +14,8 @@ SRCS_F = ./app/main.c                             \
          ./usr/test.c
 
 # 添加编译文件夹，要指定文件扩展名【多个用空格分隔】
-SRCS_D = ./modules/md5/*.c                        \
-         ./modules/crc/*.c
+SRCS_D = ./modules/led/*.c                        \
+         ./modules/delay/*.c
 
 # 添加编译库文件，包括路径及文件名【多个用空格分隔】
 LIBS   = 
@@ -23,19 +23,19 @@ LIBS   =
 # 添加源码文件及包含文件所在的路径【多个用空格分隔】
 VPATH  = ./app                                    \
          ./usr/                                   \
-         ./modules/md5/                           \
-         ./modules/crc
+         ./modules/led/                           \
+         ./modules/delay
 
 # 定义编译器及其环境相关参数
 CC = gcc
 RM = rm
 CFLAG_L = 
 CFLAG_O = -c -W -Wall
-CFLAG_M = -E -MM
+CFLAG_M = -MMD -MP -MF"$(@:%.o=%.d)"
 RMFLAGS = -fr
 MKDIR   = mkdir -p
-ECHO_SET= @set -e
-ECHO_END= 
+#ECHO_SET = @set -e
+#ECHO_END = 
 
 # 生成源文件包含路径选项参数
 ifdef VPATH
@@ -53,7 +53,7 @@ SRCS_INC := $(subst //,/,$(SRCS_INC))
 OBJS_D := $(addsuffix /,$(OBJS_D))
 OBJS_D := $(subst //,/,$(OBJS_D))
 DEPS_D := $(OBJS_D)
-DIRS := $(sort $(OBJS_D) $(dir $(EXE)))
+DIRS := $(sort $(OBJS_D) $(dir $(TARGET)))
 SRCS := $(filter %.c, $(SRCS_F) $(wildcard $(SRCS_D)))
 OBJS := $(SRCS:.c=.o)
 OBJS := $(addprefix $(OBJS_D),$(notdir $(OBJS)))
@@ -64,7 +64,7 @@ LIBS := $(sort $(LIBS))
 
 ifdef VPATH
 CFLAG_O += $(SRCS_INC)
-CFLAG_M += $(SRCS_INC)
+#CFLAG_M += $(SRCS_INC)
 endif
 
 ####################################################
@@ -73,7 +73,7 @@ endif
 
 .PHONY: all clean echo
 
-all: $(EXE)
+all: $(TARGET)
 
 # 非执行"clean/echo"才包含
 ifneq ($(MAKECMDGOALS),clean)
@@ -83,28 +83,19 @@ endif
 endif
 
 # 编译出最终执行文件
-$(EXE): $(OBJS) $(LIBS)
-	$(CC) $(CFLAG_L) -o $@ $(filter %.o, $^) $(LIBS)
+$(TARGET): $(OBJS) $(LIBS)
+	@echo "[2]making $@..."
+	@$(CC) $(CFLAG_L) -o $@ $(filter %.o, $^) $(LIBS)
 
 # 编译出中间目标文件
 $(OBJS_D)%.o: %.c
-	@echo "[2]making $@..."
-	@$(CC) $(CFLAG_O) $< -o $@
-
-# 生成代码依赖信息
-$(DEPS_D)%.d: %.c
 	@echo "[1]making $@..."
-	$(ECHO_SET); \
-	$(RM) $(RMFLAGS) $@.tmp; \
-	$(CC) $(CFLAG_M) $< > $@.tmp; \
-	sed 's,\(.*\)\.o[ :]*,$(dir $@)\1.o $@: ,g' < $@.tmp > $@; \
-	$(RM) $(RMFLAGS) $@.tmp; \
-	$(ECHO_END)
+	@$(CC) $(CFLAG_O) $(CFLAG_M) $< -o $@
 
 # 清除目标及执行文件
 clean:
 	$(MKDIR) $(DIRS)
-	$(RM) $(RMFLAGS) $(OBJX) $(EXE)
+	$(RM) $(RMFLAGS) $(OBJX) $(TARGET)
 
 # 查看变量对象相关值
 echo:

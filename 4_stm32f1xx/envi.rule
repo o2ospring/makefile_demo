@@ -10,12 +10,12 @@ AR = arm-none-eabi-ar
 RM = rm
 CFLAG_L =    -mcpu=cortex-m3 -mthumb -specs=nano.specs -T$(LD_SCF) -Wl,-Map=$(TARGET).map,--cref -Wl,--gc-sections
 CFLAG_O = -c -mcpu=cortex-m3 -mthumb -fdata-sections -ffunction-sections $(addprefix -D,$(strip $(G_DEF)))
-CFLAG_M = -MM -MP $(addprefix -D,$(strip $(G_DEF)))
+CFLAG_M = -MMD -MP -MF"$(@:%.o=%.d)"
 ARFLAGS = rcs
 RMFLAGS = -fr
 MKDIR   = mkdir -p
-ECHO_SET= @set -e
-ECHO_END= 
+#ECHO_SET = @set -e
+#ECHO_END = 
 ifdef VPATH
 SRCS_INC := $(addprefix -I,$(strip $(VPATH)))
 endif
