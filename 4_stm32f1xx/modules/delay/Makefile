@@ -15,10 +15,10 @@ SRCS_F = delay.c
 SRCS_D = 
 
 # 添加编译库文件，包括路径及文件名【多个用空格分隔】
-LIBS   = 
+LIBS_F = 
 
 # 添加源码文件及包含文件所在的路径【多个用空格分隔】
-VPATH  = 
+SRCS_I = 
 
 # 定义编译器及其环境相关参数
 include ../../envi.rule

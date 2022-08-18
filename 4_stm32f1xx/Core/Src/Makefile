@@ -33,10 +33,10 @@ SRCS_F = ../../startup_stm32f103xb.s                                     \
 SRCS_D = ../../modules/led/*.c
 
 # 添加编译库文件，包括路径及文件名【多个用空格分隔】
-LIBS   = ../../build/libs/delay.a
+LIBS_F = ../../build/libs/delay.a
 
 # 添加源码文件及包含文件所在的路径【多个用空格分隔】
-VPATH  = ../../                                   \
+SRCS_I = ../../                                   \
          ../../Core/Src                           \
          ../../Core/Inc                           \
          ../../Drivers/STM32F1xx_HAL_Driver/Src   \

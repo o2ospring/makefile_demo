@@ -13,7 +13,6 @@ RMFLAGS = -fr
 MKDIR   = mkdir -p
 #ECHO_SET = @set -e
 #ECHO_END = 
-ifdef VPATH
-SRCS_INC := $(addprefix -I,$(strip $(VPATH)))
-endif
+VPATH  := $(SRCS_I)
+SRCS_I := $(addprefix -I,$(SRCS_I) $(dir $(SRCS_F) $(SRCS_D)))
 

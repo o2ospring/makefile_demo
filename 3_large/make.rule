@@ -2,25 +2,30 @@
 # 2、根据上面的相关配置，生成包括路径的相关文件对象
 ####################################################
 
+VPATH += $(dir $(SRCS_F) $(SRCS_D))
 VPATH := $(addsuffix /,$(VPATH))
 VPATH := $(subst //,/,$(VPATH))
-SRCS_INC := $(addsuffix /,$(SRCS_INC))
-SRCS_INC := $(subst //,/,$(SRCS_INC))
+VPATH := $(sort $(VPATH))
+SRCS_I := $(addsuffix /,$(SRCS_I))
+SRCS_I := $(subst //,/,$(SRCS_I))
+SRCS_I := $(sort $(SRCS_I))
 OBJS_D := $(addsuffix /,$(OBJS_D))
 OBJS_D := $(subst //,/,$(OBJS_D))
 DEPS_D := $(OBJS_D)
 DIRS := $(sort $(OBJS_D) $(dir $(TARGET)) $(dir $(LIB)))
-SRCS := $(filter %.c, $(SRCS_F) $(wildcard $(SRCS_D)))
+SRCS := $(filter %.c, $(SRCS_F) $(wildcard $(SRCS_D))) $(filter %.C, $(SRCS_F) $(wildcard $(SRCS_D)))
 OBJS := $(SRCS:.c=.o)
+OBJS := $(OBJS:.C=.o)
 OBJS := $(addprefix $(OBJS_D),$(notdir $(OBJS)))
 DEPS := $(SRCS:.c=.d)
+DEPS := $(DEPS:.C=.d)
 DEPS := $(addprefix $(OBJS_D),$(notdir $(DEPS)))
 OBJX := $(sort $(OBJS) $(DEPS) $(addsuffix .tmp,$(DEPS)))
-LIBS := $(sort $(LIBS))
+LIBS := $(sort $(LIBS_F))
 
-ifdef VPATH
-CFLAG_O += $(SRCS_INC)
-#CFLAG_M += $(SRCS_INC)
+ifdef SRCS_I
+CFLAG_O += $(SRCS_I)
+#CFLAG_M += $(SRCS_I)
 endif
 
 ####################################################

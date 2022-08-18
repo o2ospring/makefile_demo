@@ -17,10 +17,10 @@ SRCS_F = ../app/main.c                            \
 SRCS_D = ../modules/led/*.c
 
 # 添加编译库文件，包括路径及文件名【多个用空格分隔】
-LIBS   = ../build/libs/delay.a
+LIBS_F = ../build/libs/delay.a
 
 # 添加源码文件及包含文件所在的路径【多个用空格分隔】
-VPATH  = ../app                                   \
+SRCS_I = ../app                                   \
          ../usr/                                  \
          ../modules/led/                          \
          ../modules/delay

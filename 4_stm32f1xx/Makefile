@@ -11,9 +11,9 @@ export G_DEF  = USE_HAL_DRIVER                     \
                 STM32F103xB
 
 # 添加链接器脚本文件，要路径+文件名【只能是一个对象】
-# xxx.ld复制来源: HAL库\CMSIS\Device\ST\STM32F1xx\Source\Templates\gcc\linker
+# xxx.ld复制来源: HAL库\Drivers\CMSIS\Device\ST\STM32F1xx\Source\Templates\gcc
 export ROOT = $(realpath .)
-export LD_SCF = $(ROOT)/STM32F103CBTx_FLASH.ld
+export LD_SCF = $(ROOT)/STM32F103XB_FLASH.ld
 
 # 开启编译调试信息（不定义表示关闭）
 export DEBUG  = 

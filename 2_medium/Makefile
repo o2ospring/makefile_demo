@@ -18,10 +18,10 @@ SRCS_D = ./modules/led/*.c                        \
          ./modules/delay/*.c
 
 # 添加编译库文件，包括路径及文件名【多个用空格分隔】
-LIBS   = 
+LIBS_F = 
 
 # 添加源码文件及包含文件所在的路径【多个用空格分隔】
-VPATH  = ./app                                    \
+SRCS_I = ./app                                    \
          ./usr/                                   \
          ./modules/led/                           \
          ./modules/delay
@@ -38,33 +38,35 @@ MKDIR   = mkdir -p
 #ECHO_END = 
 
 # 生成源文件包含路径选项参数
-ifdef VPATH
-SRCS_INC := $(addprefix -I,$(strip $(VPATH)))
-endif
+VPATH  := $(SRCS_I)
+SRCS_I := $(addprefix -I,$(SRCS_I) $(dir $(SRCS_F) $(SRCS_D)))
 
 ####################################################
 # 2、根据上面的相关配置，生成包括路径的相关文件对象
 ####################################################
 
+VPATH += $(sort $(dir $(SRCS_F) $(SRCS_D)))
 VPATH := $(addsuffix /,$(VPATH))
 VPATH := $(subst //,/,$(VPATH))
-SRCS_INC := $(addsuffix /,$(SRCS_INC))
-SRCS_INC := $(subst //,/,$(SRCS_INC))
+SRCS_I := $(addsuffix /,$(SRCS_I))
+SRCS_I := $(subst //,/,$(SRCS_I))
 OBJS_D := $(addsuffix /,$(OBJS_D))
 OBJS_D := $(subst //,/,$(OBJS_D))
 DEPS_D := $(OBJS_D)
 DIRS := $(sort $(OBJS_D) $(dir $(TARGET)))
-SRCS := $(filter %.c, $(SRCS_F) $(wildcard $(SRCS_D)))
+SRCS := $(filter %.c, $(SRCS_F) $(wildcard $(SRCS_D))) $(filter %.C, $(SRCS_F) $(wildcard $(SRCS_D)))
 OBJS := $(SRCS:.c=.o)
+OBJS := $(OBJS:.C=.o)
 OBJS := $(addprefix $(OBJS_D),$(notdir $(OBJS)))
 DEPS := $(SRCS:.c=.d)
+DEPS := $(DEPS:.C=.d)
 DEPS := $(addprefix $(OBJS_D),$(notdir $(DEPS)))
 OBJX := $(sort $(OBJS) $(DEPS) $(addsuffix .tmp,$(DEPS)))
-LIBS := $(sort $(LIBS))
+LIBS := $(sort $(LIBS_F))
 
-ifdef VPATH
-CFLAG_O += $(SRCS_INC)
-#CFLAG_M += $(SRCS_INC)
+ifdef SRCS_I
+CFLAG_O += $(SRCS_I)
+#CFLAG_M += $(SRCS_I)
 endif
 
 ####################################################
