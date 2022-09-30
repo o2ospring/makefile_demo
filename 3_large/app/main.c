@@ -6,8 +6,14 @@
 #include "led.h"
 #include "main_2.c" ///
 
-int main (void)
+int main (int argc, char *argv[])
 {
+	int i;
+	
+	for (i=1; i<argc; i++)
+	{
+		printf("0. argv[%d]=%s\n", i, argv[i]);
+	}
 	printf("1. main() run!\n");
 	hello("hello world!");
 	test();

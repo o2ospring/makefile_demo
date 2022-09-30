@@ -16,3 +16,13 @@ MKDIR   = mkdir -p
 VPATH  := $(SRCS_I)
 SRCS_I := $(addprefix -I,$(SRCS_I) $(dir $(SRCS_F) $(SRCS_D)))
 
+ifdef DEBUG
+ifneq ($(DEBUG),0)
+CFLAG_O += -g
+endif
+endif
+
+ifdef TARGET
+DEBUG_CMD = cgdb -d gdb -ex 'file ../build/objs/app.exe' -ex 'tb main' -ex 'r'
+endif
+

@@ -5,6 +5,9 @@ include envi.rule
 # 0、专门为【STM32Fxxx】应用工程增加的参数配置。
 ####################################################
 
+# 开启编译调试信息（不定义表示关闭）
+export DEBUG  = 
+
 # 添加全局宏定义,作用于整个项目工程【多个用空格分隔】
 # STM32F103芯片选择: STM32F103x6,STM32F103xB,STM32F103xE,STM32F103xG
 export G_DEF  = USE_HAL_DRIVER                     \
@@ -14,9 +17,6 @@ export G_DEF  = USE_HAL_DRIVER                     \
 # xxx.ld复制来源: HAL库\Drivers\CMSIS\Device\ST\STM32F1xx\Source\Templates\gcc
 export ROOT = $(realpath .)
 export LD_SCF = $(ROOT)/STM32F103XB_FLASH.ld
-
-# 开启编译调试信息（不定义表示关闭）
-export DEBUG  = 
 
 ####################################################
 # 1、定义子 Makefile 文件所在路径。【多个用空格分隔】

@@ -46,6 +46,7 @@ LIBS_F =
 
 # 添加源码文件及包含文件所在的路径【多个用空格分隔】
 SRCS_I = ../board                                 \
+         ../board/ports/include                   \
          ../board/CubeMX_Config/Inc               \
          ../../libraries/HAL_Drivers                                     \
          ../../libraries/HAL_Drivers/config                              \

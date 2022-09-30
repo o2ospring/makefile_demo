@@ -16,9 +16,12 @@ SRCS_F = ./main.c                                 \
          ../board/CubeMX_Config/Src/stm32f1xx_hal_msp.c \
          ../board/board.c                         \
          \
-         ../../libraries/HAL_Drivers/drv_common.c \
-         ../../libraries/HAL_Drivers/drv_gpio.c   \
-         ../../libraries/HAL_Drivers/drv_usart.c
+         ../../libraries/HAL_Drivers/drv_common.c       \
+         ../../libraries/HAL_Drivers/drv_gpio.c         \
+         ../../libraries/HAL_Drivers/drv_usart.c        \
+         \
+         ../../../../components/drivers/misc/pin.c      \
+         ../../../../components/drivers/serial/serial.c
 
 # 添加编译文件夹，要指定文件扩展名【多个用空格分隔】
 SRCS_D = 
@@ -30,7 +33,7 @@ LIBS_F = ../build/gcc/hal.a                       \
 # 添加源码文件及包含文件所在的路径【多个用空格分隔】
 SRCS_I = ../../../../include                      \
          ../../../../components/drivers/include   \
-         ../../../../components/drivers/include/drivers   \
+         ../../../../components/drivers/include/drivers \
          ../../../../components/finsh             \
          \
          ../../libraries/HAL_Drivers                                     \

@@ -10,21 +10,19 @@ OBJS_D = ../build/gcc
 
 # 添加编译源文件，包括路径及文件名【多个用空格分隔】
 # xxx.s复制来源: HAL库\Drivers\CMSIS\Device\ST\STM32F1xx\Source\Templates\gcc
-SRCS_F = ../../../../libcpu/arm/common/backtrace.c        \
+SRCS_F = ../../../../components/drivers/ipc/completion.c  \
+         ../../../../components/drivers/ipc/dataqueue.c   \
+         ../../../../components/drivers/ipc/pipe.c        \
+         ../../../../components/drivers/ipc/ringblk_buf.c \
+         ../../../../components/drivers/ipc/ringbuffer.c  \
+         ../../../../components/drivers/ipc/waitqueue.c   \
+         ../../../../components/drivers/ipc/workqueue.c   \
+         \
+         ../../../../libcpu/arm/common/backtrace.c        \
          ../../../../libcpu/arm/common/div0.c             \
          ../../../../libcpu/arm/common/showmem.c          \
          ../../../../libcpu/arm/cortex-m3/cpuport.c       \
          ../../../../libcpu/arm/cortex-m3/context_gcc.S   \
-         \
-         ../../../../components/drivers/ipc/completion.c  \
-         ../../../../components/drivers/src/dataqueue.c   \
-         ../../../../components/drivers/src/pipe.c        \
-         ../../../../components/drivers/src/ringblk_buf.c \
-         ../../../../components/drivers/src/ringbuffer.c  \
-         ../../../../components/drivers/src/waitqueue.c   \
-         ../../../../components/drivers/src/workqueue.c   \
-         ../../../../components/drivers/misc/pin.c        \
-         ../../../../components/drivers/serial/serial.c   \
          \
          ../../../../components/finsh/shell.c     \
          ../../../../components/finsh/msh.c       \
@@ -42,6 +40,7 @@ SRCS_F = ../../../../libcpu/arm/common/backtrace.c        \
          ../../../../src/mempool.c                \
          ../../../../src/object.c                 \
          ../../../../src/scheduler.c              \
+         ../../../../src/signal.c                 \
          ../../../../src/thread.c                 \
          ../../../../src/timer.c
 
@@ -57,11 +56,8 @@ SRCS_I = ../                                      \
          ../../../../include                      \
          ../../../../components/drivers/include   \
          ../../../../components/drivers/include/drivers   \
-         ../../../../components/finsh             \
-         \
-         ../../libraries/HAL_Drivers                                     \
-         ../../libraries/HAL_Drivers/config                              \
-         ../../libraries/HAL_Drivers/CMSIS/Include
+         ../../../../components/drivers/include/ipc       \
+         ../../../../components/finsh
 
 # 定义编译器及其环境相关参数
 include ../envi.rule

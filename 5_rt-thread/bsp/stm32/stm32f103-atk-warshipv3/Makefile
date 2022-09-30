@@ -5,6 +5,9 @@ include envi.rule
 # 0、专门为【STM32Fxxx】应用工程增加的参数配置。
 ####################################################
 
+# 开启编译调试信息（不定义表示关闭）
+export DEBUG  = 1
+
 # STM32F103芯片选择: STM32F103x6,STM32F103x8,STM32F103xB,STM32F103xC,
 #                    STM32F103xD,STM32F103xE,STM32F103xG
 export G_MCU  = STM32F103xE
@@ -53,9 +56,6 @@ export G_DEF  = $(STM32F103XX_DEF)                 \
 export ROOT = $(realpath .)
 export LD_SCF = $(ROOT)/$(STM32F103XX_LD)
 
-# 开启编译调试信息（不定义表示关闭）
-export DEBUG  = 1
-
 ####################################################
 # 1、定义子 Makefile 文件所在路径。【多个用空格分隔】
 ####################################################
@@ -68,7 +68,7 @@ MAKEFILE_D = mk_hal                                \
 ####################################################
 # 2、整理子 Makefile 文件路径信息。通过几个函数整理
 #    为方便之后生成命令字符串准备，例如整理为：
-#    cd modules/crc// cd app//
+#    @cd modules/crc// @cd app//
 ####################################################
 
 MAKEFILE_CALL := $(addsuffix /,$(MAKEFILE_D))

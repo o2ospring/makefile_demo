@@ -9,7 +9,8 @@ CC = arm-none-eabi-gcc
 AR = arm-none-eabi-ar
 RM = rm
 CFLAG_L =    -mcpu=cortex-m3 -mthumb -specs=nano.specs -T$(LD_SCF) -Wl,-Map=$(TARGET).map,--cref -Wl,--gc-sections
-CFLAG_O = -c -mcpu=cortex-m3 -mthumb -fdata-sections -ffunction-sections $(addprefix -D,$(sort $(G_DEF)))
+CFLAG_O = -c -mcpu=cortex-m3 -mthumb -fdata-sections -ffunction-sections $(addprefix -D,$(sort $(G_DEF))) -Wa,-a,-ad,-alms=$(@:.o=.lst)
+AFLAG_O = -c -mcpu=cortex-m3 -mthumb -fdata-sections -ffunction-sections $(addprefix -D,$(sort $(G_DEF)))
 CFLAG_M = -MMD -MP -MF"$(@:%.o=%.d)"
 ARFLAGS = rcs
 RMFLAGS = -fr

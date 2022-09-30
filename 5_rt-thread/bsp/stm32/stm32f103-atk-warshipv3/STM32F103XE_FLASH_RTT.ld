@@ -93,7 +93,6 @@ SECTIONS
     __rtatcmdtab_start = .;
     KEEP(*(RtAtCmdTab))
     __rtatcmdtab_end = .;
-    . = ALIGN(4);
 
     /* section information for initial. */
     . = ALIGN(4);
@@ -200,6 +199,7 @@ SECTIONS
     . = . + _Min_Stack_Size;
     . = ALIGN(8);
     _estack = .;                     /*o2ospring: add variable!*/
+    __bss_end = _estack;             /*o2ospring: add variable!*/
   } >RAM
 
   

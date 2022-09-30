@@ -1,5 +1,5 @@
 export ROOT = $(realpath .)
-.PHONY: all clean echo
+.PHONY: all clean echo debug
 include envi.rule
 
 ####################################################
@@ -9,6 +9,9 @@ include envi.rule
 # 注意: 唯一生成执行文件的子 Makefile 必须放到最后面
 MAKEFILE_D = modules/delay                         \
              app
+
+# 开启编译调试信息（不定义或定义为0表示关闭）
+export DEBUG = 1
 
 ####################################################
 # 2、整理子 Makefile 文件路径信息。通过几个函数整理
@@ -45,4 +48,7 @@ clean:
 
 echo:
 	$(subst //, && $(MAKE) echo$(LFTAB),$(MAKEFILE_CALL))
+
+debug:
+	$(subst //, && $(MAKE) debug$(LFTAB),$(MAKEFILE_CALL))
 

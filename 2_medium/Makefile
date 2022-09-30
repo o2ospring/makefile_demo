@@ -52,7 +52,7 @@ SRCS_I := $(addsuffix /,$(SRCS_I))
 SRCS_I := $(subst //,/,$(SRCS_I))
 OBJS_D := $(addsuffix /,$(OBJS_D))
 OBJS_D := $(subst //,/,$(OBJS_D))
-DEPS_D := $(OBJS_D)
+#DEPS_D:= $(OBJS_D)
 DIRS := $(sort $(OBJS_D) $(dir $(TARGET)))
 SRCS := $(filter %.c, $(SRCS_F) $(wildcard $(SRCS_D))) $(filter %.C, $(SRCS_F) $(wildcard $(SRCS_D)))
 OBJS := $(SRCS:.c=.o)
@@ -110,5 +110,5 @@ echo:
 	@echo "OBJX: $(OBJX)"        # OBJX 为所有中间文件及其路径(包括：OBJS 和 DEPS)
 	@echo "LIBS: $(LIBS)"        # LIBS 为编译包含的库文件及其路径（如：build/abc.a）
 	@echo "CFLAG_O: $(CFLAG_O)"  # CFLAG_O 编译中间目标文件的选项参数（如：-c -I./usr/）
-	@echo "CFLAG_M: $(CFLAG_M)"  # CFLAG_O 生成依赖信息文件的选项参数（如：-MM -I./usr/）
+	@echo "CFLAG_M: $(CFLAG_M)"  # CFLAG_M 生成依赖信息文件的选项参数（如：-MM -I./usr/）
 

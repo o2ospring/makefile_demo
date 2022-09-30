@@ -11,7 +11,7 @@ SRCS_I := $(subst //,/,$(SRCS_I))
 SRCS_I := $(sort $(SRCS_I))
 OBJS_D := $(addsuffix /,$(OBJS_D))
 OBJS_D := $(subst //,/,$(OBJS_D))
-DEPS_D := $(OBJS_D)
+#DEPS_D:= $(OBJS_D)
 DIRS := $(sort $(OBJS_D) $(dir $(TARGET)) $(dir $(LIB)))
 SRCS := $(filter %.c, $(SRCS_F) $(wildcard $(SRCS_D))) $(filter %.C, $(SRCS_F) $(wildcard $(SRCS_D))) $(filter %.s, $(SRCS_F)) $(filter %.S, $(SRCS_F))
 OBJS := $(SRCS:.c=.o)
@@ -58,7 +58,9 @@ ifdef TARGET
 $(TARGET).elf: $(OBJS) $(LIBS)
 	@echo "[2]making $@..."
 	@$(CC) $(CFLAG_L) -o $@ $(filter %.o, $^) $(LIBS) -lc -lm -lnosys
+	@echo ------------------------------------------------
 	@$(SZ) $@
+	@echo ------------------------------------------------
 
 $(TARGET).hex: $(TARGET).elf
 	@echo "[3]making $@...."
@@ -79,16 +81,16 @@ endif
 # 编译出中间目标文件
 $(OBJS_D)%.o: %.c
 	@echo "[1]making $@..."
-	@$(CC) $(CFLAG_O) -Wa,-a,-ad,-alms=$(@:.o=.lst) $(CFLAG_M) $< -o $@
+	@$(CC) $(CFLAG_O) $(CFLAG_M) $< -o $@
 
 $(OBJS_D)%.o: %.s
 	@echo "[1]making $@..."
-	@$(AS) $(CFLAG_O) $(CFLAG_M) $< -o $@
+	@$(AS) $(AFLAG_O) $(CFLAG_M) $< -o $@
 
 # 清除目标及执行文件
 clean:
 	$(MKDIR) $(DIRS)
-	$(RM) $(RMFLAGS) $(OBJX) $(LIB) $(TARGET).map $(TARGET).elf $(TARGET).bin $(TARGET).hex
+	$(RM) $(RMFLAGS) $(OBJX) $(LIB) $(if $(TARGET),$(TARGET).map $(TARGET).elf $(TARGET).bin $(TARGET).hex)
 
 # 查看变量对象相关值
 echo:
@@ -101,6 +103,6 @@ echo:
 	@echo "OBJX: $(OBJX)"           # OBJX 为所有中间文件及其路径(包括：OBJS 和 DEPS)
 	@echo "LIBS: $(LIBS)"           # LIBS 为编译包含的库文件及其路径（如：build/abc.a）
 	@echo "CFLAG_O: $(CFLAG_O)"     # CFLAG_O 编译中间目标文件的选项参数（如：-c -I./usr/）
-	@echo "CFLAG_M: $(CFLAG_M)"     # CFLAG_O 生成依赖信息文件的选项参数（如：-MM -I./usr/）
+	@echo "CFLAG_M: $(CFLAG_M)"     # CFLAG_M 生成依赖信息文件的选项参数（如：-MM -I./usr/）
 	@echo "-------------------"
 
