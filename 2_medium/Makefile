@@ -45,11 +45,13 @@ SRCS_I := $(addprefix -I,$(SRCS_I) $(dir $(SRCS_F) $(SRCS_D)))
 # 2、根据上面的相关配置，生成包括路径的相关文件对象
 ####################################################
 
-VPATH += $(sort $(dir $(SRCS_F) $(SRCS_D)))
+VPATH += $(dir $(SRCS_F) $(SRCS_D))
 VPATH := $(addsuffix /,$(VPATH))
 VPATH := $(subst //,/,$(VPATH))
+VPATH := $(sort $(VPATH))
 SRCS_I := $(addsuffix /,$(SRCS_I))
 SRCS_I := $(subst //,/,$(SRCS_I))
+SRCS_I := $(sort $(SRCS_I))
 OBJS_D := $(addsuffix /,$(OBJS_D))
 OBJS_D := $(subst //,/,$(OBJS_D))
 #DEPS_D:= $(OBJS_D)

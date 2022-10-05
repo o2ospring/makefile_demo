@@ -16,7 +16,7 @@ export DEBUG = 1
 ####################################################
 # 2、整理子 Makefile 文件路径信息。通过几个函数整理
 #    为方便之后生成命令字符串准备，例如整理为：
-#    cd modules/crc// cd app//
+#    @cd modules/crc// @cd app//
 ####################################################
 
 MAKEFILE_CALL := $(addsuffix /,$(MAKEFILE_D))
@@ -39,9 +39,13 @@ endef
 
 all:
 	$(subst //, && $(MAKE) all$(LFTAB),$(MAKEFILE_CALL))
-	@echo "+-----o2ospring-------------+"
-	@echo "| :-) completed.            |"
-	@echo "+---------------------------+"
+	@echo "        _\|/_        "
+	@echo "        (o o)        "
+	@echo " +---oOO-(_)-OOo---+ "
+	@echo " |    o2ospring    | "
+	@echo " |                 | "
+	@echo " |  v completed v  | "
+	@echo " +-o0o---------o0o-+ "
 
 clean:
 	$(subst //, && $(MAKE) clean$(LFTAB),$(MAKEFILE_CALL))

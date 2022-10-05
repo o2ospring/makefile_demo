@@ -36,7 +36,7 @@ endif
 # 3、执行创建文件夹、生成依赖、编译、删除等相关操作
 ####################################################
 
-.PHONY: all clean echo
+.PHONY: all clean echo debug download
 
 ifdef TARGET
 all: $(TARGET).elf $(TARGET).hex $(TARGET).bin
@@ -106,3 +106,14 @@ echo:
 	@echo "CFLAG_M: $(CFLAG_M)"     # CFLAG_M 生成依赖信息文件的选项参数（如：-MM -I./usr/）
 	@echo "-------------------"
 
+# 调试程序
+ifdef TARGET
+debug:
+	$(DEBUG_CMD)
+endif
+
+# 烧录固件
+ifdef TARGET
+download:
+	$(DOWNLOAD_CMD)
+endif

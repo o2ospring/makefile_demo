@@ -1,12 +1,12 @@
-.PHONY: all clean echo
+.PHONY: all clean echo debug download
 include envi.rule
 
 ####################################################
 # 0、专门为【STM32Fxxx】应用工程增加的参数配置。
 ####################################################
 
-# 开启编译调试信息（不定义表示关闭）
-export DEBUG  = 
+# 开启编译调试信息（不定义或定义为0表示关闭）
+export DEBUG  = 1
 
 # 添加全局宏定义,作用于整个项目工程【多个用空格分隔】
 # STM32F103芯片选择: STM32F103x6,STM32F103xB,STM32F103xE,STM32F103xG
@@ -29,7 +29,7 @@ MAKEFILE_D = modules/delay                         \
 ####################################################
 # 2、整理子 Makefile 文件路径信息。通过几个函数整理
 #    为方便之后生成命令字符串准备，例如整理为：
-#    cd modules/crc// cd app//
+#    @cd modules/crc// @cd app//
 ####################################################
 
 MAKEFILE_CALL := $(addsuffix /,$(MAKEFILE_D))
@@ -52,13 +52,23 @@ endef
 
 all:
 	$(subst //, && $(MAKE) all$(LFTAB),$(MAKEFILE_CALL))
-	@echo "+-----o2ospring-------------+"
-	@echo "| :-) completed.            |"
-	@echo "+---------------------------+"
+	@echo "        _\|/_        "
+	@echo "        (o o)        "
+	@echo " +---oOO-(_)-OOo---+ "
+	@echo " |    o2ospring    | "
+	@echo " |                 | "
+	@echo " |  v completed v  | "
+	@echo " +-o0o---------o0o-+ "
 
 clean:
 	$(subst //, && $(MAKE) clean$(LFTAB),$(MAKEFILE_CALL))
 
 echo:
 	$(subst //, && $(MAKE) echo$(LFTAB),$(MAKEFILE_CALL))
+
+debug:
+	$(subst //, && $(MAKE) debug$(LFTAB),$(MAKEFILE_CALL))
+
+download:
+	$(subst //, && $(MAKE) download$(LFTAB),$(MAKEFILE_CALL))
 

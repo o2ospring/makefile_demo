@@ -23,6 +23,6 @@ endif
 endif
 
 ifdef TARGET
-DEBUG_CMD = cgdb -d gdb -ex 'file ../build/objs/app.exe' -ex 'tb main' -ex 'r'
+DEBUG_CMD = cgdb -d gdb -ex 'file $(TARGET)' -ex 'tb main' -ex 'r'
 endif
 
