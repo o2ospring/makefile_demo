@@ -1,5 +1,5 @@
 export ROOT = $(realpath .)
-.PHONY: all clean echo debug
+.PHONY: all clean echo debug clean_app
 include envi.rule
 
 ####################################################
@@ -24,6 +24,11 @@ MAKEFILE_CALL := $(subst //,/,$(MAKEFILE_CALL))
 MAKEFILE_CALL := $(addsuffix /,$(MAKEFILE_CALL))
 MAKEFILE_CALL := $(addprefix cd////,$(MAKEFILE_CALL))
 MAKEFILE_CALL := $(subst cd////,@cd ,$(MAKEFILE_CALL))
+MAKEFILE_CALL2 := $(addsuffix /,$(word $(words $(MAKEFILE_D)),$(MAKEFILE_D)))
+MAKEFILE_CALL2 := $(subst //,/,$(MAKEFILE_CALL2))
+MAKEFILE_CALL2 := $(addsuffix /,$(MAKEFILE_CALL2))
+MAKEFILE_CALL2 := $(addprefix cd////,$(MAKEFILE_CALL2))
+MAKEFILE_CALL2 := $(subst cd////,@cd ,$(MAKEFILE_CALL2))
 # 定义【换行+Tab格】
 define LFTAB
 
@@ -54,5 +59,7 @@ echo:
 	$(subst //, && $(MAKE) echo$(LFTAB),$(MAKEFILE_CALL))
 
 debug:
-	$(subst //, && $(MAKE) debug$(LFTAB),$(MAKEFILE_CALL))
+	$(subst //, && $(MAKE) debug$(LFTAB),$(MAKEFILE_CALL2))
 
+clean_app:
+	$(subst //, && $(MAKE) clean$(LFTAB),$(MAKEFILE_CALL2))
