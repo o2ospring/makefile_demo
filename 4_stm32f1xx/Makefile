@@ -1,3 +1,4 @@
+export ROOT = $(realpath .)
 .PHONY: all clean echo debug download clean_app
 include envi.rule
 
@@ -8,15 +9,56 @@ include envi.rule
 # 开启编译调试信息（不定义或定义为0表示关闭）
 export DEBUG  = 1
 
-# 添加全局宏定义,作用于整个项目工程【多个用空格分隔】
-# STM32F103芯片选择: STM32F103x6,STM32F103xB,STM32F103xE,STM32F103xG
-export G_DEF  = USE_HAL_DRIVER                     \
-                STM32F103xB
+# 应用工程选择:[mk_project_xxx]             某某工程
+export PROJ   = mk_project_xxx
 
-# 添加链接器脚本文件，要路径+文件名【只能是一个对象】
-# xxx.ld复制来源: HAL库\Drivers\CMSIS\Device\ST\STM32F1xx\Source\Templates\gcc
-export ROOT = $(realpath .)
-export LD_SCF = $(ROOT)/STM32F103XB_FLASH.ld
+# STM32F103芯片选择: STM32F103x6,STM32F103x8,STM32F103xB,STM32F103xC,
+#                    STM32F103xD,STM32F103xE,STM32F103xG
+ifeq ($(PROJ),mk_project_xxx)
+export G_MCU  = STM32F103xE
+endif
+
+# 芯片的官方宏: STM32F103x6,STM32F103xB,STM32F103xE,STM32F103xG
+# 链接脚本源自: HAL库\Drivers\CMSIS\Device\ST\STM32F1xx\Source\Templates\gcc
+ifeq ($(G_MCU),STM32F103x6)
+export STM32F103XX_DEF := STM32F103x6
+export STM32F103XX_ASM := startup_stm32f103x6.s
+export STM32F103XX_LD  := STM32F103X6_FLASH.ld
+endif
+ifeq ($(G_MCU),STM32F103x8)
+export STM32F103XX_DEF := STM32F103xB
+export STM32F103XX_ASM := startup_stm32f103xb.s
+export STM32F103XX_LD  := STM32F103X8_FLASH.ld
+endif
+ifeq ($(G_MCU),STM32F103xB)
+export STM32F103XX_DEF := STM32F103xB
+export STM32F103XX_ASM := startup_stm32f103xb.s
+export STM32F103XX_LD  := STM32F103XB_FLASH.ld
+endif
+ifeq ($(G_MCU),STM32F103xC)
+export STM32F103XX_DEF := STM32F103xE
+export STM32F103XX_ASM := startup_stm32f103xe.s
+export STM32F103XX_LD  := STM32F103XC_FLASH.ld
+endif
+ifeq ($(G_MCU),STM32F103xD)
+export STM32F103XX_DEF := STM32F103xE
+export STM32F103XX_ASM := startup_stm32f103xe.s
+export STM32F103XX_LD  := STM32F103XD_FLASH.ld
+endif
+ifeq ($(G_MCU),STM32F103xE)
+export STM32F103XX_DEF := STM32F103xE
+export STM32F103XX_ASM := startup_stm32f103xe.s
+export STM32F103XX_LD  := STM32F103XE_FLASH.ld
+endif
+ifeq ($(G_MCU),STM32F103xG)
+export STM32F103XX_DEF := STM32F103xG
+export STM32F103XX_ASM := startup_stm32f103xg.s
+export STM32F103XX_LD  := STM32F103XG_FLASH.ld
+endif
+
+# 添加全局宏定义,作用于整个项目工程【多个用空格分隔】
+export G_DEF  = $(STM32F103XX_DEF)                 \
+                USE_HAL_DRIVER
 
 ####################################################
 # 1、定义子 Makefile 文件所在路径。【多个用空格分隔】

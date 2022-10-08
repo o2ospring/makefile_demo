@@ -10,7 +10,7 @@ OBJS_D = ../../build/objs
 
 # 添加编译源文件，包括路径及文件名【多个用空格分隔】
 # xxx.s复制来源: HAL库\Drivers\CMSIS\Device\ST\STM32F1xx\Source\Templates\gcc
-SRCS_F = ../../startup_stm32f103xb.s                                     \
+SRCS_F = ../../$(STM32F103XX_ASM)                                        \
          ../../Core/Src/main.c                                           \
          ../../Core/Src/stm32f1xx_it.c                                   \
          ../../Core/Src/stm32f1xx_hal_msp.c                              \
@@ -46,6 +46,9 @@ SRCS_I = ../../                                   \
          ../../Drivers/CMSIS/Include              \
          ../../modules/delay                      \
          ../../modules/led
+
+# 添加链接脚本文件，含路径和文件名【只能是一个对象】
+LDS_F  = ../../$(STM32F103XX_LD)
 
 # 定义编译器及其环境相关参数
 include ../../envi.rule

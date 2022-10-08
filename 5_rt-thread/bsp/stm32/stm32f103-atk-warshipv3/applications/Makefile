@@ -12,7 +12,7 @@ OBJS_D = ../build/gcc
 # xxx.s复制来源: HAL库\Drivers\CMSIS\Device\ST\STM32F1xx\Source\Templates\gcc
 SRCS_F = ./main.c                                 \
          \
-         ../startup_stm32f103xe_rtt.s             \
+         ../$(STM32F103XX_ASM)                    \
          ../board/CubeMX_Config/Src/stm32f1xx_hal_msp.c \
          ../board/board.c                         \
          \
@@ -20,6 +20,7 @@ SRCS_F = ./main.c                                 \
          ../../libraries/HAL_Drivers/drv_gpio.c         \
          ../../libraries/HAL_Drivers/drv_usart.c        \
          \
+         ../../../../components/finsh/shell.c     \
          ../../../../components/drivers/misc/pin.c      \
          ../../../../components/drivers/serial/serial.c
 
@@ -48,6 +49,9 @@ SRCS_I = ../../../../include                      \
          ../board                   \
          ../board/CubeMX_Config/Inc \
          ../board/ports/include
+
+# 添加链接脚本文件，含路径和文件名【只能是一个对象】
+LDS_F  = ../$(STM32F103XX_LD)
 
 # 定义编译器及其环境相关参数
 include ../envi.rule

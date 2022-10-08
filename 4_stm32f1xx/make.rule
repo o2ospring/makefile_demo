@@ -79,13 +79,41 @@ $(LIB): $(OBJS)
 endif
 
 # 编译出中间目标文件
-$(OBJS_D)%.o: %.c
-	@echo "[1]making $@..."
-	@$(CC) $(CFLAG_O) $(CFLAG_M) $< -o $@
+#$(OBJS_D)%.o: %.c
+#	@echo "[1]making $@..."
+#	@$(CC) $(CFLAG_O) $(CFLAG_M) $< -o $@
+#
+#$(OBJS_D)%.o: %.s
+#	@echo "[1]making $@..."
+#	@$(AS) $(AFLAG_O) $(CFLAG_M) $< -o $@
 
-$(OBJS_D)%.o: %.s
-	@echo "[1]making $@..."
-	@$(AS) $(AFLAG_O) $(CFLAG_M) $< -o $@
+define FUNC_C
+$1: $2
+	@echo "[1]making $$@..."
+	@$$(CC) $$(CFLAG_O) $$(CFLAG_M) $$^ -o $$@
+endef
+
+define FUNC_S
+$1: $2
+	@echo "[1]making $$@..."
+	@$$(AS) $$(AFLAG_O) $$(CFLAG_M) $$^ -o $$@
+endef
+
+$(if             $(filter %.c, $(SRCS)),\
+     $(foreach v,$(filter %.c, $(SRCS)),\
+          $(eval $(call FUNC_C,$(addprefix $(OBJS_D),$(notdir $(v:%.c=%.o))),$(v)))))
+
+$(if             $(filter %.C, $(SRCS)),\
+     $(foreach v,$(filter %.C, $(SRCS)),\
+          $(eval $(call FUNC_C,$(addprefix $(OBJS_D),$(notdir $(v:%.C=%.o))),$(v)))))
+
+$(if             $(filter %.s, $(SRCS)),\
+     $(foreach v,$(filter %.s, $(SRCS)),\
+          $(eval $(call FUNC_S,$(addprefix $(OBJS_D),$(notdir $(v:%.s=%.o))),$(v)))))
+
+$(if             $(filter %.S, $(SRCS)),\
+     $(foreach v,$(filter %.S, $(SRCS)),\
+          $(eval $(call FUNC_S,$(addprefix $(OBJS_D),$(notdir $(v:%.S=%.o))),$(v)))))
 
 # 清除目标及执行文件
 clean:
