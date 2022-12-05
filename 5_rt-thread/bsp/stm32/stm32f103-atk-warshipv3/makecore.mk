@@ -63,7 +63,7 @@ $(TARGET).elf: $(OBJS) $(LIBS)
 	@echo ------------------------------------------------
 
 $(TARGET).hex: $(TARGET).elf
-	@echo "[3]making $@...."
+	@echo "[3]making $@..."
 	@$(CP) $< $@ -O ihex
 
 $(TARGET).bin: $(TARGET).elf
@@ -90,13 +90,13 @@ endif
 define FUNC_C
 $1: $2
 	@echo "[1]making $$@..."
-	@$$(CC) $$(CFLAG_O) $$(CFLAG_M) $$^ -o $$@
+	@$$(CC) $$(CFLAG_O) $$(CFLAG_M) $$< -o $$@
 endef
 
 define FUNC_S
 $1: $2
 	@echo "[1]making $$@..."
-	@$$(AS) $$(AFLAG_O) $$(CFLAG_M) $$^ -o $$@
+	@$$(AS) $$(AFLAG_O) $$(CFLAG_M) $$< -o $$@
 endef
 
 $(if             $(filter %.c, $(SRCS)),\

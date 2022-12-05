@@ -21,9 +21,9 @@ LIBS_F =
 SRCS_I = 
 
 # 定义编译器及其环境相关参数
-include ../../envi.rule
+include ../../makeenvi.mk
 CFLAG_O += -W -Wall -O1
 
 # 包含[Makefile]脚本公共代码
-include ../../make.rule
+include ../../makecore.mk
 

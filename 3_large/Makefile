@@ -1,6 +1,6 @@
 export ROOT = $(realpath .)
 .PHONY: all clean echo debug clean_app
-include envi.rule
+include makeenvi.mk
 
 ####################################################
 # 1、定义子 Makefile 文件所在路径。【多个用空格分隔】

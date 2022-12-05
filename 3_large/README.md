@@ -1,10 +1,10 @@
 
 > 使用多个子 Makefile 编译工程，支持为一些模块定制编译参数，适合一些中大型的项目工程。
 
-1、在 [shell] 中进入 [make.rule] 所在的目录
+1、在 [shell] 中进入 [makecore.mk] 所在的目录
 
 ```bash
-cd 3_large        # 进入[make.rule]所在的目录
+cd 3_large        # 进入[makecore.mk]所在的目录
 ```
 
 2、初次使用时，重置编译状态，同时创建所需文件夹

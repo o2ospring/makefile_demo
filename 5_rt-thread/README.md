@@ -5,10 +5,10 @@
 > 1、为了减少体积，本演示工程已将所有没用到的文件(夹)全部删除。如果你想用回官方完整工程，请将本工程的《stm32f103-atk-warshipv3》文件夹取代官方工程对应的文件夹；  
 > 2、目前使用 make 编译的固件烧录到板子运行发现串口打印不能输入命令，暂时还没时间去查找是什么原因引起的（经查是`INIT_APP_EXPORT(finsh_system_init)`语句注册失败引起，具体原因应该是链接器将静态库`rtt.a`中的这些段优化掉了，不知为何链接脚本的`KEEP`对静态库`rtt.a`无效，目前暂时处理方法将`shell.c`文件移到`applications/Makefile`里编译！奇怪的是在 rt-thread V4.1.0 版本使用相同编译脚本不存在这样的问题~~）！
 
-1、在 [shell] 中进入 [make.rule] 所在的目录
+1、在 [shell] 中进入 [makecore.mk] 所在的目录
 
 ```bash
-cd 5_rt-thread/bsp/stm32/stm32f103-atk-warshipv3  # 进入[make.rule]所在的目录
+cd 5_rt-thread/bsp/stm32/stm32f103-atk-warshipv3  # 进入[makecore.mk]所在的目录
 ```
 
 2、初次使用时，重置编译状态，同时创建所需文件夹

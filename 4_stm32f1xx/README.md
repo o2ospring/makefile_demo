@@ -2,10 +2,10 @@
 > 使用多个子 Makefile 编译工程，支持为一些模块定制编译参数，适合一些中大型的项目工程。  
 > 本案例为 STM32F103xB 单片机工程，由 STM32CubeMX 图形化配置工具生成 MDK 工程，再手工增加 Makefile 编译脚本，具体请阅读《[linux-STM32F开发-makefile 构建与使用](https://o2ospring.github.io/20220804/)》！关于 STM32CubeMX，支持 STM32 全系列芯片，可生成 MDK、IAR、Makefile 等工具链工程，具体请参考《[STM32CubeMX 基本使用](https://o2ospring.github.io/20210606/)》。 
 
-1、在 [shell] 中进入 [make.rule] 所在的目录
+1、在 [shell] 中进入 [makecore.mk] 所在的目录
 
 ```bash
-cd 4_stm32f1xx    # 进入[make.rule]所在的目录
+cd 4_stm32f1xx    # 进入[makecore.mk]所在的目录
 ```
 
 2、初次使用时，重置编译状态，同时创建所需文件夹

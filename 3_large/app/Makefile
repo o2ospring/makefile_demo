@@ -26,9 +26,9 @@ SRCS_I = ../app                                   \
          ../modules/delay
 
 # 定义编译器及其环境相关参数
-include ../envi.rule
+include ../makeenvi.mk
 CFLAG_O += -W -Wall
 
 # 包含[Makefile]脚本公共代码
-include ../make.rule
+include ../makecore.mk
 
